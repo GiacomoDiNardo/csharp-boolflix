@@ -1,0 +1,65 @@
+﻿@model List<Film>
+
+<h1>Elenco Film</h1>
+
+@if(Model.Count() == 0){
+    <h2>Non sono presenti film nella lista</h2>
+    <a class="btn btn-success mb-4" asp-area="" asp-controller="Film" asp-action="Create">Aggiungi Film</a>
+} else {
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Categoria</th>
+                <th scope="col">Cast</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Regista</th>
+                <th scope="col">Data Pubblicazione</th>
+                <th scope="col">Durata</th>
+                <th scope="col">Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <a class="btn btn-success mb-4" asp-area="" asp-controller="Film" asp-action="Create">Aggiungi Film</a>
+            </tr>
+
+            @foreach (Film film in Model)
+            {
+                <tr>
+                    <td>@film.Id</td>
+                    <td>@film.Title</td>
+                    <td>@film.Description</td>
+
+                    <td>
+                        @foreach (Category category in film.Categories) {
+                            <div>
+                                <span class="badge bg-primary">@category.Name</span>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @foreach (Cast cast in film.Casts)
+                        {
+                            <div>
+                                <span class="badge bg-primary">@cast.Name, @cast.Surname</span>
+                            </div>
+                        }
+                    </td>
+
+                    <td>
+                            <img src="@film.Image" alt="@film.Title" style="width: 300px">
+                    </td>
+                    <td>@film.Author</td>
+                    <td>@film.Date</td>
+                    <td>@film.Duration</td>
+                    <td></td>
+
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

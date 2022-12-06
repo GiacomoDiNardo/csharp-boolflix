@@ -1,4 +1,5 @@
 using csharp_boolflix.Data;
+using csharp_boolflix.Models.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,8 @@ var connectionString = builder.Configuration.GetConnectionString("BoolflixDbCont
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IDbFilmRepository, DbFilmRepository>();
 
 var app = builder.Build();
 

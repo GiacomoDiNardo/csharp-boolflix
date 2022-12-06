@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using csharp_boolflix.Data;
 
@@ -11,9 +12,11 @@ using csharp_boolflix.Data;
 namespace csharpboolflix.Migrations
 {
     [DbContext(typeof(BoolflixDbContext))]
-    partial class BoolflixDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206082205_AddFktoRelations")]
+    partial class AddFktoRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace csharpboolflix.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CastContent", b =>
-                {
-                    b.Property<int>("CastsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ContentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CastsId", "ContentsId");
-
-                    b.HasIndex("ContentsId");
-
-                    b.ToTable("CastContent");
-                });
 
             modelBuilder.Entity("CategoryContent", b =>
                 {
@@ -262,6 +250,9 @@ namespace csharpboolflix.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ContentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -273,6 +264,8 @@ namespace csharpboolflix.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContentId");
 
                     b.ToTable("Casts");
                 });
@@ -307,6 +300,9 @@ namespace csharpboolflix.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
+
+                    b.Property<int>("CastId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -414,21 +410,6 @@ namespace csharpboolflix.Migrations
                     b.HasDiscriminator().HasValue("Serie");
                 });
 
-            modelBuilder.Entity("CastContent", b =>
-                {
-                    b.HasOne("csharp_boolflix.Models.Cast", null)
-                        .WithMany()
-                        .HasForeignKey("CastsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("csharp_boolflix.Models.Content", null)
-                        .WithMany()
-                        .HasForeignKey("ContentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("CategoryContent", b =>
                 {
                     b.HasOne("csharp_boolflix.Models.Category", null)
@@ -495,6 +476,17 @@ namespace csharpboolflix.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("csharp_boolflix.Models.Cast", b =>
+                {
+                    b.HasOne("csharp_boolflix.Models.Content", "Content")
+                        .WithMany("Casts")
+                        .HasForeignKey("ContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Content");
+                });
+
             modelBuilder.Entity("csharp_boolflix.Models.Episode", b =>
                 {
                     b.HasOne("csharp_boolflix.Models.Season", "Season")
@@ -515,6 +507,11 @@ namespace csharpboolflix.Migrations
                         .IsRequired();
 
                     b.Navigation("Serie");
+                });
+
+            modelBuilder.Entity("csharp_boolflix.Models.Content", b =>
+                {
+                    b.Navigation("Casts");
                 });
 
             modelBuilder.Entity("csharp_boolflix.Models.Season", b =>

@@ -2,10 +2,17 @@
 {
     public class Serie : Content
     {
-        public int Id { get; set; }
-        
+       
         public List<Season>? SeasonList { get; set; }
-        
+
+        public Serie(string title, string description, string author, DateTime date, string image)
+        {
+            Title = title;
+            Description = description;
+            Author = author;
+            Date = date;
+            Image = image;
+        }
 
     }
 }
