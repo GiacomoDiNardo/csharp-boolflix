@@ -164,5 +164,19 @@ namespace csharp_boolflix.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete(int id)
+        {
+            Film film = filmRepository.GetById(id);
+
+            if(film == null)
+            {
+                return NotFound();
+            }
+
+            filmRepository.Delete(film);
+
+            return RedirectToAction("Index");
+        }
     }
 }

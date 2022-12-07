@@ -57,6 +57,7 @@
                     <td>@film.Duration</td>
                     <td>
                         <a href="@Url.Action("Update", "Film", new {id = film.Id})" class="btn btn-success">Modifica</a>
+                        <a href="@Url.Action("Delete", "Film", new {id = film.Id})" class="btn btn-danger">Cancella</a>
                     </td>
 
                 </tr>

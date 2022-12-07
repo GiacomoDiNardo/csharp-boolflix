@@ -87,5 +87,11 @@ namespace csharp_boolflix.Models.Repository
             db.SaveChanges();
         }
 
+        public void Delete(Film film)
+        {
+            db.Films.Remove(film);
+            db.SaveChanges();
+        }
+
     }
 }
