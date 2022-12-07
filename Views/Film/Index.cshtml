@@ -55,7 +55,9 @@
                     <td>@film.Author</td>
                     <td>@film.Date</td>
                     <td>@film.Duration</td>
-                    <td></td>
+                    <td>
+                        <a href="@Url.Action("Update", "Film", new {id = film.Id})" class="btn btn-success">Modifica</a>
+                    </td>
 
                 </tr>
             }

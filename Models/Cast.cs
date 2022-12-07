@@ -12,7 +12,7 @@ namespace csharp_boolflix.Models
 
         [Required(ErrorMessage = "Il campo è obbligatorio")]
         [StringLength(50, ErrorMessage = "Il cognome non può avere più di 50 caratteri")]
-        public string Surname { get; set; }
+        public string? Surname { get; set; }
         public List<Content>? Contents { get; set; }
     }
 }

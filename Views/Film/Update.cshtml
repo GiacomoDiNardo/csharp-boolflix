@@ -1,9 +1,9 @@
 ﻿@using csharp_boolflix.Models.Forms
 @model FilmForm
 
-<h1>Inserisci Film</h1>
+<h1>Modifica Film</h1>
 
-<form asp-controller="Film" asp-action="Create" method="post">
+<form asp-controller="Film" asp-action="Update" asp-route-id="@Model.Film.Id" method="post">
     @Html.AntiForgeryToken()
 
     <div class="mb-3">
